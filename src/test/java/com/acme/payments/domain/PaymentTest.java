@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.Currency;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -16,7 +17,7 @@ public class PaymentTest {
     public void shoulGetZeroAmount() {
         List<WorkTime> workedTime = List.of();
         Payment weeklyPayment = new WeeklyPayment(workedTime);
-        assertThat(weeklyPayment.amount(), is(UsdMoney.ZERO));
+        assertThat(weeklyPayment.amount(), is(new Money(BigDecimal.ZERO, Currency.getInstance("USD"))));
     }
 
     @Test
@@ -30,6 +31,6 @@ public class PaymentTest {
         );
         Payment weeklyPayment = new WeeklyPayment(workedTime);
 
-        assertThat(weeklyPayment.amount(), is(new UsdMoney(new BigDecimal("215"))));
+        assertThat(weeklyPayment.amount(), is(new Money(new BigDecimal("215"), Currency.getInstance("USD"))));
     }
 }

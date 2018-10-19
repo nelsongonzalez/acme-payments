@@ -1,6 +1,7 @@
 package com.acme.payments.domain;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.List;
 
 public final class WeeklyPayment implements Payment {
@@ -12,9 +13,10 @@ public final class WeeklyPayment implements Payment {
     }
 
     @Override
-    public Money amount() {
+    public MonetaryAmount amount() {
         for (WorkTime workTime : workedTime) {
         }
-        return new UsdMoney(BigDecimal.ZERO);
+        // TODO parameterize currency
+        return new Money(BigDecimal.ZERO, Currency.getInstance("USD"));
     }
 }

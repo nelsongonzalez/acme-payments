@@ -2,5 +2,5 @@ package com.acme.payments.domain;
 
 public interface Company {
 
-    Money amountToPay(Employee employee);
+    MonetaryAmount amountToPay(Employee employee);
 }

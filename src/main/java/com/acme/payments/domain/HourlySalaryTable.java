@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Currency;
 import java.util.List;
 
 public final class HourlySalaryTable implements SalaryTable {
@@ -15,8 +16,9 @@ public final class HourlySalaryTable implements SalaryTable {
     }
 
     @Override
-    public Money salaryOf(WorkTime workTime) {
-        Money salary = UsdMoney.ZERO;
+    public MonetaryAmount salaryOf(WorkTime workTime) {
+        // TODO parameterize currency
+        MonetaryAmount salary = new Money(BigDecimal.ZERO, Currency.getInstance("USD"));
         for (SalaryTable.Entry salaryEntry : salaries) {
             long hours = salaryEntry.hoursOf(workTime);
             salary = salary.add(salaryEntry.salaryBy(hours));
@@ -34,9 +36,9 @@ public final class HourlySalaryTable implements SalaryTable {
 
         private final Duration duration;
 
-        private final Money salary;
+        private final MonetaryAmount salary;
 
-        public Entry(DayOfWeek dayOfWeek, LocalTime from, LocalTime to, Money salary) {
+        public Entry(DayOfWeek dayOfWeek, LocalTime from, LocalTime to, MonetaryAmount salary) {
             this.dayOfWeek = dayOfWeek;
             this.from = from;
             this.to = to;
@@ -53,8 +55,8 @@ public final class HourlySalaryTable implements SalaryTable {
         }
 
         @Override
-        public Money salaryBy(long hours) {
-            return new UsdMoney(salary.amount().multiply(new BigDecimal(hours)));
+        public MonetaryAmount salaryBy(long hours) {
+            return new Money(salary.getAmount().multiply(new BigDecimal(hours)), salary.getCurrency());
         }
     }
 }
