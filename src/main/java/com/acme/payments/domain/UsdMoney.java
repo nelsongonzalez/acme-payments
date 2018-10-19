@@ -8,7 +8,7 @@ public final class UsdMoney implements Money {
 
     public static final Money ZERO = new UsdMoney(BigDecimal.ZERO);
 
-    private final Currency currency = Currency.getInstance("USD");
+    private static final Currency CURRENCY = Currency.getInstance("USD");
 
     private final BigDecimal amount;
 
@@ -25,11 +25,30 @@ public final class UsdMoney implements Money {
             return false;
         }
         UsdMoney usdMoney = (UsdMoney) other;
-        return currency.equals(usdMoney.currency) && amount.equals(usdMoney.amount);
+        return amount.equals(usdMoney.amount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(currency, amount);
+        return Objects.hash(CURRENCY, amount);
+    }
+
+    @Override
+    public Currency currency() {
+        return CURRENCY;
+    }
+
+    @Override
+    public BigDecimal amount() {
+        return amount;
+    }
+
+    @Override
+    public Money add(Money money) {
+        if (!CURRENCY.equals(money.currency())) {
+            throw new IllegalArgumentException(
+                    String.format("Parameter's currency is different of %s", CURRENCY.getCurrencyCode()));
+        }
+        return new UsdMoney(amount.add(money.amount()));
     }
 }

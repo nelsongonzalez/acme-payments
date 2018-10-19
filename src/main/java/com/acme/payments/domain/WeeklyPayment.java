@@ -14,8 +14,7 @@ public final class WeeklyPayment implements Payment {
     @Override
     public Money amount() {
         for (WorkTime workTime : workedTime) {
-
         }
-        return new UsdMoney(new BigDecimal("215"));
+        return new UsdMoney(BigDecimal.ZERO);
     }
 }
