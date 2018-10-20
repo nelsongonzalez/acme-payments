@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface Employee {
 
-    List<WorkTime> workedTime();
+    List<WorkTime> getWorkedTime();
 }

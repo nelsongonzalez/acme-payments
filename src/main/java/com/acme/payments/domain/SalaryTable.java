@@ -2,12 +2,10 @@ package com.acme.payments.domain;
 
 public interface SalaryTable {
 
-    MonetaryAmount salaryOf(WorkTime workTime);
+    MonetaryAmount workTimeSalary(WorkTime workTime);
 
     interface Entry {
 
-        long hoursOf(WorkTime workTime);
-
-        MonetaryAmount salaryBy(long hours);
+        MonetaryAmount partialWorkTimeSalary(WorkTime workTime);
     }
 }

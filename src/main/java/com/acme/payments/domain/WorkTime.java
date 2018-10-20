@@ -1,10 +1,12 @@
 package com.acme.payments.domain;
 
+import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalTime;
 
 public interface WorkTime {
 
-    boolean fallsIn(LocalTime localTime);
+    Duration limitDuration(LocalTime startTime, LocalTime limitEndTime);
 
-    long hours();
+    boolean equalDayOfWeek(DayOfWeek dayOfWeek);
 }

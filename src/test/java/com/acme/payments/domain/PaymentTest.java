@@ -1,5 +1,9 @@
 package com.acme.payments.domain;
 
+import com.acme.payments.domain.impl.HourlySalaryTable;
+import com.acme.payments.domain.impl.HourlyWorkTime;
+import com.acme.payments.domain.impl.Money;
+import com.acme.payments.domain.impl.WeeklyPayment;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -14,23 +18,23 @@ import static org.junit.Assert.assertThat;
 public class PaymentTest {
 
     @Test
-    public void shoulGetZeroAmount() {
-        List<WorkTime> workedTime = List.of();
-        Payment weeklyPayment = new WeeklyPayment(workedTime);
-        assertThat(weeklyPayment.amount(), is(new Money(BigDecimal.ZERO, Currency.getInstance("USD"))));
-    }
-
-    @Test
     public void shoulGetPaymentAmount() {
-        List<WorkTime> workedTime = List.of(
-                new HourlyWorkTime(DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(12, 0)),
-                new HourlyWorkTime(DayOfWeek.TUESDAY, LocalTime.of(10, 0), LocalTime.of(12, 0)),
-                new HourlyWorkTime(DayOfWeek.THURSDAY, LocalTime.of(1, 0), LocalTime.of(3, 0)),
-                new HourlyWorkTime(DayOfWeek.SATURDAY, LocalTime.of(14, 0), LocalTime.of(18, 0)),
-                new HourlyWorkTime(DayOfWeek.SUNDAY, LocalTime.of(20, 0), LocalTime.of(21, 0))
-        );
-        Payment weeklyPayment = new WeeklyPayment(workedTime);
+        var hour9Minute1 = LocalTime.of(9, 1);
+        var hour10 = LocalTime.of(10, 0);
+        var hour12 = LocalTime.of(12, 0);
+        var hour18 = LocalTime.of(18, 0);
+        var usd15 = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
+        var usd30 = new Money(new BigDecimal("30"), Currency.getInstance("USD"));
 
-        assertThat(weeklyPayment.amount(), is(new Money(new BigDecimal("215"), Currency.getInstance("USD"))));
+        List<SalaryTable.Entry> salaryList = List.of(
+                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, hour9Minute1, hour18, usd15)
+        );
+        var hourlySalaryTable = new HourlySalaryTable(salaryList);
+        List<WorkTime> workedTime = List.of(
+                new HourlyWorkTime(DayOfWeek.MONDAY, hour10, hour12)
+        );
+        var weeklyPayment = new WeeklyPayment(hourlySalaryTable);
+
+        assertThat(weeklyPayment.totalSalary(workedTime), is(usd30));
     }
 }

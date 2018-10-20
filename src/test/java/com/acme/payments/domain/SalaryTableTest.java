@@ -1,5 +1,8 @@
 package com.acme.payments.domain;
 
+import com.acme.payments.domain.impl.HourlySalaryTable;
+import com.acme.payments.domain.impl.HourlyWorkTime;
+import com.acme.payments.domain.impl.Money;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -14,40 +17,54 @@ import static org.junit.Assert.assertThat;
 public class SalaryTableTest {
 
     @Test
-    public void shouldCalcularHours() {
-        SalaryTable.Entry salaryEntry = new HourlySalaryTable.Entry(DayOfWeek.MONDAY, LocalTime.of(9, 1), LocalTime.of(18, 0), new Money(BigDecimal.ZERO, Currency.getInstance("USD")));
-        WorkTime hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(12, 0));
-        assertThat(salaryEntry.hoursOf(hourlyWorkTime), is(3L));
-    }
+    public void shouldGetSalaryOfAnHour() {
+        var hour9Minute1 = LocalTime.of(9, 1);
+        var hour10 = LocalTime.of(10, 0);
+        var hour11 = LocalTime.of(11, 0);
+        var hour18 = LocalTime.of(18, 0);
+        var usd15 = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
 
-    @Test
-    public void shouldCalcularHours2() {
-        SalaryTable.Entry salaryEntry = new HourlySalaryTable.Entry(DayOfWeek.MONDAY, LocalTime.of(9, 1), LocalTime.of(18, 0), new Money(BigDecimal.ZERO, Currency.getInstance("USD")));
-        WorkTime hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(10, 0));
-        assertThat(salaryEntry.hoursOf(hourlyWorkTime), is(1L));
-    }
-
-    @Test
-    public void shouldGetSalaryOfOneHour() {
         List<SalaryTable.Entry> salaryList = List.of(
-                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, LocalTime.of(9, 1), LocalTime.of(18, 0), new Money(new BigDecimal("15"), Currency.getInstance("USD")))
+                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, hour9Minute1, hour18, usd15)
         );
-        SalaryTable hourlySalaryTable = new HourlySalaryTable(salaryList);
+        var hourlySalaryTable = new HourlySalaryTable(salaryList);
+        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, hour10, hour11);
 
-        WorkTime hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(11, 0));
-
-        assertThat(hourlySalaryTable.salaryOf(hourlyWorkTime), is(new Money(new BigDecimal("15"), Currency.getInstance("USD"))));
+        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(usd15));
     }
 
     @Test
     public void shouldGetSalaryOfTwoHours() {
+        var hour9Minute1 = LocalTime.of(9, 1);
+        var hour10 = LocalTime.of(10, 0);
+        var hour12 = LocalTime.of(12, 0);
+        var hour18 = LocalTime.of(18, 0);
+        var usd15 = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
+        var usd30 = new Money(new BigDecimal("30"), Currency.getInstance("USD"));
+
         List<SalaryTable.Entry> salaryList = List.of(
-                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, LocalTime.of(9, 1), LocalTime.of(18, 0), new Money(new BigDecimal("15"), Currency.getInstance("USD")))
+                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, hour9Minute1, hour18, usd15)
         );
-        SalaryTable hourlySalaryTable = new HourlySalaryTable(salaryList);
+        var hourlySalaryTable = new HourlySalaryTable(salaryList);
+        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, hour10, hour12);
 
-        WorkTime hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(12, 0));
+        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(usd30));
+    }
 
-        assertThat(hourlySalaryTable.salaryOf(hourlyWorkTime), is(new Money(new BigDecimal("30"), Currency.getInstance("USD"))));
+    @Test
+    public void shouldGetSalaryOnlyForHoursInTheRange() {
+        var hour9Minute1 = LocalTime.of(9, 1);
+        var hour17 = LocalTime.of(17, 0);
+        var hour18 = LocalTime.of(18, 0);
+        var hour19 = LocalTime.of(19, 0);
+        var usd15 = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
+
+        List<SalaryTable.Entry> salaryList = List.of(
+                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, hour9Minute1, hour18, usd15)
+        );
+        var hourlySalaryTable = new HourlySalaryTable(salaryList);
+        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, hour17, hour19);
+
+        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(usd15));
     }
 }
