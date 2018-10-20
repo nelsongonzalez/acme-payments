@@ -11,7 +11,5 @@ public interface MonetaryAmount {
 
     MonetaryAmount add(MonetaryAmount monetaryAmount);
 
-    MonetaryAmount times(long times);
-
     MonetaryAmount times(BigDecimal times);
 }

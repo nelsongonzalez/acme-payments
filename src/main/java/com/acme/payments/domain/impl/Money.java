@@ -8,20 +8,17 @@ import java.util.Objects;
 
 public final class Money implements MonetaryAmount {
 
-    public static final MonetaryAmount NOTHING = new Money();
+    public static final MonetaryAmount NOTHING = new NullMoney();
 
     private final BigDecimal amount;
 
     private final Currency currency;
 
     public Money(BigDecimal amount, Currency currency) {
+        Objects.requireNonNull(amount, "amount must be not null.");
+        Objects.requireNonNull(currency, "currency must be not null.");
         this.amount = amount;
         this.currency = currency;
-    }
-
-    private Money() {
-        this.amount = BigDecimal.ZERO;
-        this.currency = Currency.getInstance("USD");
     }
 
     @Override
@@ -53,6 +50,7 @@ public final class Money implements MonetaryAmount {
 
     @Override
     public MonetaryAmount add(MonetaryAmount monetaryAmount) {
+        Objects.requireNonNull(monetaryAmount, "monetaryAmount must be not null.");
         if (!currency.equals(monetaryAmount.getCurrency())) {
             throw new IllegalArgumentException(
                     String.format("Parameter's currency is different of %s", currency.getCurrencyCode()));
@@ -61,17 +59,36 @@ public final class Money implements MonetaryAmount {
     }
 
     @Override
-    public MonetaryAmount times(long times) {
-        return new Money(amount.multiply(new BigDecimal(times)), currency);
-    }
-
-    @Override
     public MonetaryAmount times(BigDecimal times) {
+        Objects.requireNonNull(times, "times must be not null.");
         return new Money(amount.multiply(times), currency);
     }
 
     @Override
     public String toString() {
         return String.format("%s %,f", currency.getCurrencyCode(), amount);
+    }
+
+    private static class NullMoney implements MonetaryAmount {
+
+        @Override
+        public Currency getCurrency() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public BigDecimal getAmount() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public MonetaryAmount add(MonetaryAmount monetaryAmount) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public MonetaryAmount times(BigDecimal times) {
+            throw new UnsupportedOperationException();
+        }
     }
 }

@@ -6,7 +6,7 @@ import java.time.LocalTime;
 
 public interface WorkTime {
 
-    Duration limitDuration(LocalTime startTime, LocalTime limitEndTime);
-
     boolean equalDayOfWeek(DayOfWeek dayOfWeek);
+
+    Duration durationBetween(LocalTime startTime, LocalTime limitEndTime);
 }
