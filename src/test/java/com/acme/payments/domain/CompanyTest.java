@@ -18,7 +18,6 @@ public class CompanyTest {
     public void shouldCalcAmountOfMoney() {
         var nineOClock = LocalTime.of(9, 0);
         var tenOClock = LocalTime.of(10, 0);
-        var twelveOClock = LocalTime.of(12, 0);
         var eighteenOClock = LocalTime.of(18, 0);
         var fifteenUsd = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
         var thirtyUsd = new Money(new BigDecimal("30"), Currency.getInstance("USD"));
@@ -29,7 +28,7 @@ public class CompanyTest {
         var hourlySalaryTable = new HourlySalaryTable(salaryList);
 
         List<WorkEvent> workedTime = List.of(
-                new HourlyWorkEvent(DayOfWeek.MONDAY, tenOClock, twelveOClock)
+                new HourlyWorkEvent(DayOfWeek.MONDAY, tenOClock, LocalTime.NOON)
         );
         var reneEmployee = new FlexTimeEmployee("Rene", workedTime);
 

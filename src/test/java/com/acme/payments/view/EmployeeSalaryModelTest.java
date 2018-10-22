@@ -27,4 +27,18 @@ public class EmployeeSalaryModelTest {
         verify(salaryObserver, times(5)).propertyChange(argument.capture());
         assertThat(argument.getValue().getNewValue(), is("The amount to pay RENE is: 215 USD"));
     }
+
+    @Test
+    public void shouldCalculateLimitSalary() {
+        var pathAsString = EmployeeSchedule.class.getResource("/fileOkLimit.txt").getPath();
+        var observableSalary = new HourlyEmployeeSalaryModel(Path.of(pathAsString));
+        var salaryObserver = mock(SalaryObserver.class);
+        observableSalary.addObserver(salaryObserver);
+
+        observableSalary.calculate();
+
+        var argument = ArgumentCaptor.forClass(PropertyChangeEvent.class);
+        verify(salaryObserver, times(8)).propertyChange(argument.capture());
+        assertThat(argument.getValue().getNewValue(), is("The amount to pay RENE is: 3600 USD"));
+    }
 }

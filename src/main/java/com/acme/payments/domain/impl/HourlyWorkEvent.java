@@ -19,7 +19,7 @@ public final class HourlyWorkEvent implements WorkEvent {
         Objects.requireNonNull(endTime, "endTime must be not null.");
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
-        this.endTime = endTime;
+        this.endTime = LocalTime.MIDNIGHT.equals(endTime) ? LocalTime.MAX : endTime;
     }
 
     @Override
@@ -32,14 +32,17 @@ public final class HourlyWorkEvent implements WorkEvent {
         Objects.requireNonNull(limitStartTime, "limitStartTime must be not null.");
         Objects.requireNonNull(limitEndTime, "limitEndTime must be not null.");
         Duration duration = Duration.ZERO;
-        if (isBetween(startTime, limitStartTime, limitEndTime) || isBetween(endTime, limitStartTime, limitEndTime)) {
+        if (isBetween(startTime, limitStartTime, limitEndTime)
+                || isBetween(endTime, limitStartTime, limitEndTime)
+                || isBetween(limitStartTime, startTime, endTime)
+                || isBetween(limitEndTime, startTime, endTime)) {
             duration = calculateDurationBetween(limitStartTime, limitEndTime);
         }
         return duration;
     }
 
     private boolean isBetween(LocalTime time, LocalTime startTime, LocalTime endTime) {
-        return time.isAfter(startTime) && time.isBefore(endTime);
+        return (time.equals(startTime) || time.isAfter(startTime)) && time.isBefore(endTime);
     }
 
     private Duration calculateDurationBetween(LocalTime limitStartTime, LocalTime limitEndTime) {

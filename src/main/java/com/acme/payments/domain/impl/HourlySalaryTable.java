@@ -99,7 +99,6 @@ public final class HourlySalaryTable implements SalaryTable {
         private List<SalaryTable.Entry> salaries;
 
         public Builder defaultSalaryTable() {
-            var zeroOClock = LocalTime.of(0, 0);
             var nineOClock = LocalTime.of(9, 0);
             var eighteenOClock = LocalTime.of(18, 0);
             var fifteenUsd = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
@@ -110,13 +109,13 @@ public final class HourlySalaryTable implements SalaryTable {
             List<SalaryTable.Entry> salaryList = new ArrayList<>();
             for (DayOfWeek day : DayOfWeek.values()) {
                 if (isWeekend(day)) {
-                    addEntry(salaryList, day, zeroOClock, nineOClock, thirtyUsd);
+                    addEntry(salaryList, day, LocalTime.MIDNIGHT, nineOClock, thirtyUsd);
                     addEntry(salaryList, day, nineOClock, eighteenOClock, twentyUsd);
-                    addEntry(salaryList, day, eighteenOClock, zeroOClock.minusMinutes(1), twentyFiveUsd);
+                    addEntry(salaryList, day, eighteenOClock, LocalTime.MAX, twentyFiveUsd);
                 } else {
-                    addEntry(salaryList, day, zeroOClock, nineOClock, twentyFiveUsd);
+                    addEntry(salaryList, day, LocalTime.MIDNIGHT, nineOClock, twentyFiveUsd);
                     addEntry(salaryList, day, nineOClock, eighteenOClock, fifteenUsd);
-                    addEntry(salaryList, day, eighteenOClock, zeroOClock.minusMinutes(1), twentyUsd);
+                    addEntry(salaryList, day, eighteenOClock, LocalTime.MAX, twentyUsd);
                 }
             }
 
