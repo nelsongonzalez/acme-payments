@@ -2,7 +2,7 @@ package com.acme.payments.domain.impl;
 
 import com.acme.payments.domain.MonetaryAmount;
 import com.acme.payments.domain.SalaryTable;
-import com.acme.payments.domain.WorkTime;
+import com.acme.payments.domain.WorkEvent;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -22,11 +22,11 @@ public final class HourlySalaryTable implements SalaryTable {
     }
 
     @Override
-    public MonetaryAmount workTimeSalary(final WorkTime workTime) {
-        Objects.requireNonNull(workTime, "workTime must be not null.");
+    public MonetaryAmount workEventSalary(final WorkEvent workEvent) {
+        Objects.requireNonNull(workEvent, "workEvent must be not null.");
         return salaries.stream()
-                .filter((e) -> e.equalDayOfWeek(workTime))
-                .map((e) -> e.partialWorkTimeSalary(workTime))
+                .filter((e) -> e.equalDayOfWeek(workEvent))
+                .map((e) -> e.partialWorkEventSalary(workEvent))
                 .reduce(MonetaryAmount::add)
                 .orElse(Money.NOTHING);
     }
@@ -57,23 +57,23 @@ public final class HourlySalaryTable implements SalaryTable {
         }
 
         @Override
-        public boolean equalDayOfWeek(WorkTime workTime) {
-            return workTime.equalDayOfWeek(dayOfWeek);
+        public boolean equalDayOfWeek(WorkEvent workEvent) {
+            return workEvent.equalDayOfWeek(dayOfWeek);
         }
 
         @Override
-        public MonetaryAmount partialWorkTimeSalary(WorkTime workTime) {
-            Objects.requireNonNull(workTime, "workTime must be not null.");
+        public MonetaryAmount partialWorkEventSalary(WorkEvent workEvent) {
+            Objects.requireNonNull(workEvent, "workEvent must be not null.");
             MonetaryAmount amount = new Money(BigDecimal.ZERO, monetaryAmount.getCurrency());
-            if (equalDayOfWeek(workTime)) {
-                amount = calculateHourlySalary(workTime);
+            if (equalDayOfWeek(workEvent)) {
+                amount = calculateHourlySalary(workEvent);
             }
             return amount;
         }
 
-        private MonetaryAmount calculateHourlySalary(WorkTime workTime) {
+        private MonetaryAmount calculateHourlySalary(WorkEvent workEvent) {
             MonetaryAmount accumulatedAmount = new Money(BigDecimal.ZERO, monetaryAmount.getCurrency());
-            Duration workTimeDuration = workTime.durationBetween(startTime, endTime);
+            Duration workTimeDuration = workEvent.durationBetween(startTime, endTime);
             long minutes = workTimeDuration.toMinutes();
             if (minutes > NO_TIME) {
                 long hours = workTimeDuration.toHours();

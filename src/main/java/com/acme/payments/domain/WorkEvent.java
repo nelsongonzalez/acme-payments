@@ -4,7 +4,7 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalTime;
 
-public interface WorkTime {
+public interface WorkEvent {
 
     boolean equalDayOfWeek(DayOfWeek dayOfWeek);
 

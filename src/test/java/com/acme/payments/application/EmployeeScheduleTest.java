@@ -1,7 +1,7 @@
 package com.acme.payments.application;
 
 import com.acme.payments.domain.Employee;
-import com.acme.payments.domain.WorkTime;
+import com.acme.payments.domain.WorkEvent;
 import com.acme.payments.application.impl.DataFileEmployeeSchedule;
 import com.acme.payments.application.impl.MinLinesEmployeeSchedule;
 import org.junit.Test;
@@ -19,15 +19,15 @@ public class EmployeeScheduleTest {
     public void shouldReadEmployeeFromFile() {
         String pathAsString = EmployeeSchedule.class.getResource("/fileOk.txt").getPath();
         var employeeSchedule = new DataFileEmployeeSchedule(Path.of(pathAsString));
-        var employees = employeeSchedule.read();
+        var employees = employeeSchedule.scheduling();
 
         Employee reneEmployee = employees.stream()
                 .filter((e) -> "RENE".equals(e.getName()))
                 .findFirst()
                 .orElseThrow();
-        List<WorkTime> reneWorkedTime = reneEmployee.getWorkTimes();
+        List<WorkEvent> reneWorkedTime = reneEmployee.getWorkSchedule();
         assertThat(employees, hasSize(5));
-        assertThat(reneEmployee.getWorkTimes(), hasSize(5));
+        assertThat(reneEmployee.getWorkSchedule(), hasSize(5));
         assertThat(reneWorkedTime, hasSize(5));
     }
 
@@ -35,7 +35,7 @@ public class EmployeeScheduleTest {
     public void shouldValidateMinimunLines() {
         String pathAsString = EmployeeSchedule.class.getResource("/fileTwoLines.txt").getPath();
         var employeeSchedule = new MinLinesEmployeeSchedule(new DataFileEmployeeSchedule(Path.of(pathAsString)), 5);
-        employeeSchedule.read();
+        employeeSchedule.scheduling();
         fail("Should thrown an exception");
     }
 }

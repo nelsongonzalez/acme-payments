@@ -19,7 +19,7 @@ public final class MinLinesEmployeeSchedule implements EmployeeSchedule {
     }
 
     @Override
-    public List<Employee> read() {
+    public List<Employee> scheduling() {
         try {
             long countLines = Files.lines(employeeSchedule.path).count();
             if (countLines < minLines) {
@@ -28,6 +28,6 @@ public final class MinLinesEmployeeSchedule implements EmployeeSchedule {
         } catch (IOException e) {
             throw new IllegalArgumentException("File data is invalid.");
         }
-        return employeeSchedule.read();
+        return employeeSchedule.scheduling();
     }
 }

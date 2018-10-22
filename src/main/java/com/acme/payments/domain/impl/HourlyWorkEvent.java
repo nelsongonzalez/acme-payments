@@ -1,19 +1,19 @@
 package com.acme.payments.domain.impl;
 
-import com.acme.payments.domain.WorkTime;
+import com.acme.payments.domain.WorkEvent;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public final class HourlyWorkTime implements WorkTime {
+public final class HourlyWorkEvent implements WorkEvent {
 
     private final DayOfWeek dayOfWeek;
     private final LocalTime startTime;
     private final LocalTime endTime;
 
-    public HourlyWorkTime(DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime) {
+    public HourlyWorkEvent(DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime) {
         Objects.requireNonNull(dayOfWeek, "dayOfWeek must be not null.");
         Objects.requireNonNull(startTime, "startTime must be not null.");
         Objects.requireNonNull(endTime, "endTime must be not null.");

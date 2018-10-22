@@ -1,9 +1,9 @@
 package com.acme.payments.application.impl;
 
 import com.acme.payments.domain.Employee;
-import com.acme.payments.domain.WorkTime;
-import com.acme.payments.domain.impl.Executive;
-import com.acme.payments.domain.impl.HourlyWorkTime;
+import com.acme.payments.domain.WorkEvent;
+import com.acme.payments.domain.impl.FlexTimeEmployee;
+import com.acme.payments.domain.impl.HourlyWorkEvent;
 import com.acme.payments.application.EmployeeSchedule;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public final class DataFileEmployeeSchedule implements EmployeeSchedule {
     }
 
     @Override
-    public List<Employee> read() {
+    public List<Employee> scheduling() {
         try {
             return Files.lines(path)
                     .map(this::readExecutive)
@@ -46,7 +46,7 @@ public final class DataFileEmployeeSchedule implements EmployeeSchedule {
         }
     }
 
-    private Executive readExecutive(String executiveAsString) {
+    private FlexTimeEmployee readExecutive(String executiveAsString) {
         var matcher = SCHEDULE_REGEX.matcher(executiveAsString);
         if (matcher.matches()) {
             var name = matcher.group(1);
@@ -54,12 +54,12 @@ public final class DataFileEmployeeSchedule implements EmployeeSchedule {
             var workTimes = SPLIT_SCHEDULE_ENTRIES_REGEX.splitAsStream(schedule)
                     .map(this::readSchedule)
                     .collect(Collectors.toUnmodifiableList());
-            return new Executive(name, workTimes);
+            return new FlexTimeEmployee(name, workTimes);
         }
         throw new IllegalArgumentException(String.format("Invalid line '%s'.", executiveAsString));
     }
 
-    private WorkTime readSchedule(String scheduleAsString) {
+    private WorkEvent readSchedule(String scheduleAsString) {
         var matcher = SCHEDULE_ENTRY_REGEX.matcher(scheduleAsString);
         if (matcher.matches()) {
             var day = matcher.group(1);
@@ -67,7 +67,7 @@ public final class DataFileEmployeeSchedule implements EmployeeSchedule {
             var from = matcher.group(2);
             var to = matcher.group(3);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:m");
-            return new HourlyWorkTime(dayOfWeek, LocalTime.parse(from, formatter), LocalTime.parse(to, formatter));
+            return new HourlyWorkEvent(dayOfWeek, LocalTime.parse(from, formatter), LocalTime.parse(to, formatter));
         }
         throw new IllegalArgumentException(String.format("The value '%s' is an invalid schedule entry.", scheduleAsString));
     }

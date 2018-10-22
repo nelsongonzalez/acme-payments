@@ -2,12 +2,12 @@ package com.acme.payments.domain;
 
 public interface SalaryTable {
 
-    MonetaryAmount workTimeSalary(WorkTime workTime);
+    MonetaryAmount workEventSalary(WorkEvent workEvent);
 
     interface Entry {
 
-        boolean equalDayOfWeek(WorkTime workTime);
+        boolean equalDayOfWeek(WorkEvent workEvent);
 
-        MonetaryAmount partialWorkTimeSalary(WorkTime workTime);
+        MonetaryAmount partialWorkEventSalary(WorkEvent workEvent);
     }
 }

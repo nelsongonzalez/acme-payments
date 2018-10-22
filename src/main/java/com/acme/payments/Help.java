@@ -48,7 +48,7 @@ public final class Help {
         help.append(WHITE_BOLD);
         help.append("\tFor example:\n");
         help.append(RESET);
-        help.append("\tRENE=MO10:00-12:00,TU10:00-12:00,TH01:00-03:00,SA14:00-18:00,SU20:00-21:00");
+        help.append("\tRENE=MO10:00-12:00,TU10:00-12:00,TH01:00-03:00,SA14:00-18:00,SU20:00-21:00\n");
         print(help.toString());
     }
 

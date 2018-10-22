@@ -6,5 +6,5 @@ public interface Employee {
 
     String getName();
 
-    List<WorkTime> getWorkTimes();
+    List<WorkEvent> getWorkSchedule();
 }

@@ -1,7 +1,7 @@
 package com.acme.payments.view;
 
 import com.acme.payments.application.EmployeeSchedule;
-import com.acme.payments.view.impl.HourlySalaryModelObservable;
+import com.acme.payments.view.impl.HourlyEmployeeSalaryModel;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -12,14 +12,14 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
-public class SalaryModelTest {
+public class EmployeeSalaryModelTest {
 
     @Test
     public void shouldCalcularSalaries() {
         var pathAsString = EmployeeSchedule.class.getResource("/fileFiveLines.txt").getPath();
-        var observableSalary = new HourlySalaryModelObservable(Path.of(pathAsString));
+        var observableSalary = new HourlyEmployeeSalaryModel(Path.of(pathAsString));
         var salaryObserver = mock(SalaryObserver.class);
-        observableSalary.addPropertyChangeListener(salaryObserver);
+        observableSalary.addObserver(salaryObserver);
 
         observableSalary.calculate();
 

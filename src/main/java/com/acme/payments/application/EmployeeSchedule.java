@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface EmployeeSchedule {
 
-    List<Employee> read();
+    List<Employee> scheduling();
 }

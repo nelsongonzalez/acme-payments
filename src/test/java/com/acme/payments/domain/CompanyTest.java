@@ -28,12 +28,12 @@ public class CompanyTest {
         );
         var hourlySalaryTable = new HourlySalaryTable(salaryList);
 
-        List<WorkTime> workedTime = List.of(
-                new HourlyWorkTime(DayOfWeek.MONDAY, tenOClock, twelveOClock)
+        List<WorkEvent> workedTime = List.of(
+                new HourlyWorkEvent(DayOfWeek.MONDAY, tenOClock, twelveOClock)
         );
-        var reneEmployee = new Executive("Rene", workedTime);
+        var reneEmployee = new FlexTimeEmployee("Rene", workedTime);
 
-        var weeklyPayment = new HourlyPayment(hourlySalaryTable);
+        var weeklyPayment = new HourlySalary(hourlySalaryTable);
         var acmeCompany = new FlexTimeCompany("ACME", weeklyPayment);
         var payToRene = acmeCompany.payTo(reneEmployee);
 

@@ -1,9 +1,9 @@
 package com.acme.payments.domain;
 
+import com.acme.payments.domain.impl.HourlySalary;
 import com.acme.payments.domain.impl.HourlySalaryTable;
-import com.acme.payments.domain.impl.HourlyWorkTime;
+import com.acme.payments.domain.impl.HourlyWorkEvent;
 import com.acme.payments.domain.impl.Money;
-import com.acme.payments.domain.impl.HourlyPayment;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -15,7 +15,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class PaymentTest {
+public class SalaryTest {
 
     @Test
     public void shoulGetPaymentAmount() {
@@ -30,11 +30,11 @@ public class PaymentTest {
                 new HourlySalaryTable.Entry(DayOfWeek.MONDAY, nineOClock, eighteenOClock, fifteenUsd)
         );
         var hourlySalaryTable = new HourlySalaryTable(salaryList);
-        List<WorkTime> workedTime = List.of(
-                new HourlyWorkTime(DayOfWeek.MONDAY, tenOClock, twelveOClock)
+        List<WorkEvent> workedTime = List.of(
+                new HourlyWorkEvent(DayOfWeek.MONDAY, tenOClock, twelveOClock)
         );
-        var weeklyPayment = new HourlyPayment(hourlySalaryTable);
+        var weeklyPayment = new HourlySalary(hourlySalaryTable);
 
-        assertThat(weeklyPayment.totalSalary(workedTime), is(thirtyUsd));
+        assertThat(weeklyPayment.calculate(workedTime), is(thirtyUsd));
     }
 }

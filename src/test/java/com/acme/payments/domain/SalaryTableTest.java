@@ -1,7 +1,7 @@
 package com.acme.payments.domain;
 
 import com.acme.payments.domain.impl.HourlySalaryTable;
-import com.acme.payments.domain.impl.HourlyWorkTime;
+import com.acme.payments.domain.impl.HourlyWorkEvent;
 import com.acme.payments.domain.impl.Money;
 import org.junit.Test;
 
@@ -28,9 +28,9 @@ public class SalaryTableTest {
                 new HourlySalaryTable.Entry(DayOfWeek.MONDAY, nineOClock, eighteenOClock, fifteenUsd)
         );
         var hourlySalaryTable = new HourlySalaryTable(salaryList);
-        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, tenOClock, elevenOClock);
+        var hourlyWorkTime = new HourlyWorkEvent(DayOfWeek.MONDAY, tenOClock, elevenOClock);
 
-        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(fifteenUsd));
+        assertThat(hourlySalaryTable.workEventSalary(hourlyWorkTime), is(fifteenUsd));
     }
 
     @Test
@@ -46,9 +46,9 @@ public class SalaryTableTest {
                 new HourlySalaryTable.Entry(DayOfWeek.MONDAY, nineOClock, eighteenOClock, fifteenUsd)
         );
         var hourlySalaryTable = new HourlySalaryTable(salaryList);
-        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, tenOClock, twelveOClock);
+        var hourlyWorkTime = new HourlyWorkEvent(DayOfWeek.MONDAY, tenOClock, twelveOClock);
 
-        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(thirtyUsd));
+        assertThat(hourlySalaryTable.workEventSalary(hourlyWorkTime), is(thirtyUsd));
     }
 
     @Test
@@ -63,8 +63,8 @@ public class SalaryTableTest {
                 new HourlySalaryTable.Entry(DayOfWeek.MONDAY, nineOClock, eighteenOClock, fifteenUsd)
         );
         var hourlySalaryTable = new HourlySalaryTable(salaryList);
-        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, seventeenOClock, nineteenOClock);
+        var hourlyWorkTime = new HourlyWorkEvent(DayOfWeek.MONDAY, seventeenOClock, nineteenOClock);
 
-        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(fifteenUsd));
+        assertThat(hourlySalaryTable.workEventSalary(hourlyWorkTime), is(fifteenUsd));
     }
 }
