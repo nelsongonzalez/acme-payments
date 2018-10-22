@@ -36,7 +36,7 @@ public final class Help {
         help.append(WHITE_BOLD);
         help.append("\t<day> ");
         help.append(RESET);
-        help.append("is the first two letters of the day\n");
+        help.append("is the first two letters of the day.\n");
         help.append(WHITE_BOLD);
         help.append("\t<time_from> ");
         help.append(RESET);

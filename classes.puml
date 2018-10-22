@@ -7,40 +7,42 @@
 'interface Salary
 'interface WorkEvent
 
-interface Company {
-    MonetaryAmount payTo(Employee employee)
-}
+package "domain" {
+    interface Company {
+        MonetaryAmount payTo(Employee employee)
+    }
 
-interface Employee {
-    String getName()
-    List<WorkEvent> getWorkSchedule()
-}
+    interface Employee {
+        String getName()
+        List<WorkEvent> getWorkSchedule()
+    }
 
-interface MonetaryAmount {
-    Currency getCurrency()
-    BigDecimal getAmount()
-    MonetaryAmount add(MonetaryAmount monetaryAmount)
-    MonetaryAmount times(BigDecimal times)
-}
+    interface MonetaryAmount {
+        Currency getCurrency()
+        BigDecimal getAmount()
+        MonetaryAmount add(MonetaryAmount monetaryAmount)
+        MonetaryAmount times(BigDecimal times)
+    }
 
-interface Salary {
-    MonetaryAmount calculate(List<WorkEvent> workSchedule)
-}
+    interface Salary {
+        MonetaryAmount calculate(List<WorkEvent> workSchedule)
+    }
 
-interface SalaryTable {
-    MonetaryAmount workEventSalary(WorkEvent workEvent)
-}
+    interface SalaryTable {
+        MonetaryAmount workEventSalary(WorkEvent workEvent)
+    }
 
-interface WorkEvent {
-    boolean equalDayOfWeek(DayOfWeek dayOfWeek)
-    Duration durationBetween(LocalTime startTime, LocalTime limitEndTime)
-}
+    interface WorkEvent {
+        boolean equalDayOfWeek(DayOfWeek dayOfWeek)
+        Duration durationBetween(LocalTime startTime, LocalTime limitEndTime)
+    }
 
-Company --> Employee
-Company --> Salary
-Employee --- WorkEvent
-Salary --> WorkEvent
-Salary --> SalaryTable
-SalaryTable --> WorkEvent
+    Company --> Employee
+    Company --> Salary
+    Employee --- WorkEvent
+    Salary --> WorkEvent
+    Salary --> SalaryTable
+    SalaryTable --> WorkEvent
+}
 
 @enduml

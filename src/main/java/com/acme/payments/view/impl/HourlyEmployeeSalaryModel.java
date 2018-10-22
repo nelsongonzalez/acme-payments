@@ -13,6 +13,8 @@ import java.util.Objects;
 
 public final class HourlyEmployeeSalaryModel implements EmployeeSalaryModel, Observable {
 
+    private static final int AT_LEAST_FIVE_LINES = 5;
+
     private final PropertyChangeSupport support;
 
     private final Path path;
@@ -35,7 +37,7 @@ public final class HourlyEmployeeSalaryModel implements EmployeeSalaryModel, Obs
 
     @Override
     public void calculate() {
-        var employees = new MinLinesEmployeeSchedule(new DataFileEmployeeSchedule(path), 5).scheduling();
+        var employees = new MinLinesEmployeeSchedule(new DataFileEmployeeSchedule(path), AT_LEAST_FIVE_LINES).scheduling();
         var salary = new HourlyEmployeeSalary();
         employees.forEach(employee -> {
             var payToEmployee = salary.calculate(employee);
