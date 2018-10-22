@@ -38,9 +38,9 @@ public final class HourlyEmployeeSalaryModel implements EmployeeSalaryModel, Obs
     @Override
     public void calculate() {
         var employees = new MinLinesEmployeeSchedule(new DataFileEmployeeSchedule(path), AT_LEAST_FIVE_LINES).scheduling();
-        var salary = new HourlyEmployeeSalary();
+        var employeeSalary = new HourlyEmployeeSalary();
         employees.forEach(employee -> {
-            var payToEmployee = salary.calculate(employee);
+            var payToEmployee = employeeSalary.calculate(employee);
             support.firePropertyChange("", "",
                     String.format("The amount to pay %s is: %.0f %s",
                             employee.getName(), payToEmployee.getAmount(), payToEmployee.getCurrency()));

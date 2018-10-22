@@ -32,7 +32,7 @@ public class EmployeeScheduleTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldValidateMinimunLines() {
+    public void shouldValidateMinimumLines() {
         String pathAsString = EmployeeSchedule.class.getResource("/fileTwoLines.txt").getPath();
         var employeeSchedule = new MinLinesEmployeeSchedule(new DataFileEmployeeSchedule(Path.of(pathAsString)), 5);
         employeeSchedule.scheduling();

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 public class EmployeeSalaryModelTest {
 
     @Test
-    public void shouldCalcularSalaries() {
+    public void shouldCalculateSalaries() {
         var pathAsString = EmployeeSchedule.class.getResource("/fileFiveLines.txt").getPath();
         var observableSalary = new HourlyEmployeeSalaryModel(Path.of(pathAsString));
         var salaryObserver = mock(SalaryObserver.class);

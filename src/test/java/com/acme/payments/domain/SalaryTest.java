@@ -18,7 +18,7 @@ import static org.junit.Assert.assertThat;
 public class SalaryTest {
 
     @Test
-    public void shoulGetPaymentAmount() {
+    public void shouldGetPaymentAmount() {
         var nineOClock = LocalTime.of(9, 0);
         var tenOClock = LocalTime.of(10, 0);
         var twelveOClock = LocalTime.of(12, 0);

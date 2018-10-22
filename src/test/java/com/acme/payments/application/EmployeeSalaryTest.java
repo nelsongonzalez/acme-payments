@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 public class EmployeeSalaryTest {
 
     @Test
-    public void shouldCalcularSalaries() {
+    public void shouldCalculateSalaries() {
         var pathAsString = EmployeeSchedule.class.getResource("/fileRene.txt").getPath();
         var employeeSchedule = new DataFileEmployeeSchedule(Path.of(pathAsString));
         var employees = employeeSchedule.scheduling();
