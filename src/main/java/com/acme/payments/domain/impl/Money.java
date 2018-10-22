@@ -66,7 +66,7 @@ public final class Money implements MonetaryAmount {
 
     @Override
     public String toString() {
-        return String.format("%s %,f", currency.getCurrencyCode(), amount);
+        return String.format("%,f %s ", amount, currency.getCurrencyCode());
     }
 
     private static class NullMoney implements MonetaryAmount {

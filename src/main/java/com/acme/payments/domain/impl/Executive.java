@@ -9,15 +9,24 @@ import java.util.stream.Collectors;
 
 public final class Executive implements Employee {
 
-    private final List<WorkTime> workedTime;
+    private final List<WorkTime> workTimes;
 
-    public Executive(List<WorkTime> workedTime) {
-        Objects.requireNonNull(workedTime, "workedTime must be not null.");
-        this.workedTime = workedTime.stream().collect(Collectors.toUnmodifiableList());
+    private final String name;
+
+    public Executive(String name, List<WorkTime> workTimes) {
+        Objects.requireNonNull(name, "name must be not null.");
+        Objects.requireNonNull(workTimes, "workTimes must be not null.");
+        this.name = name;
+        this.workTimes = workTimes.stream().collect(Collectors.toUnmodifiableList());
     }
 
     @Override
-    public List<WorkTime> getWorkedTime() {
-        return workedTime;
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public List<WorkTime> getWorkTimes() {
+        return workTimes;
     }
 }

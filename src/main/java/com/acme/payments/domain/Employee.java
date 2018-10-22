@@ -4,5 +4,7 @@ import java.util.List;
 
 public interface Employee {
 
-    List<WorkTime> getWorkedTime();
+    String getName();
+
+    List<WorkTime> getWorkTimes();
 }

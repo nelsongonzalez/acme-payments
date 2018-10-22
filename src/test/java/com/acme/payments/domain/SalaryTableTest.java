@@ -18,53 +18,53 @@ public class SalaryTableTest {
 
     @Test
     public void shouldGetSalaryOfAnHour() {
-        var hour9Minute1 = LocalTime.of(9, 1);
-        var hour10 = LocalTime.of(10, 0);
-        var hour11 = LocalTime.of(11, 0);
-        var hour18 = LocalTime.of(18, 0);
-        var usd15 = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
+        var nineOClock = LocalTime.of(9, 0);
+        var tenOClock = LocalTime.of(10, 0);
+        var elevenOClock = LocalTime.of(11, 0);
+        var eighteenOClock = LocalTime.of(18, 0);
+        var fifteenUsd = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
 
         List<SalaryTable.Entry> salaryList = List.of(
-                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, hour9Minute1, hour18, usd15)
+                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, nineOClock, eighteenOClock, fifteenUsd)
         );
         var hourlySalaryTable = new HourlySalaryTable(salaryList);
-        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, hour10, hour11);
+        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, tenOClock, elevenOClock);
 
-        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(usd15));
+        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(fifteenUsd));
     }
 
     @Test
     public void shouldGetSalaryOfTwoHours() {
-        var hour9Minute1 = LocalTime.of(9, 1);
-        var hour10 = LocalTime.of(10, 0);
-        var hour12 = LocalTime.of(12, 0);
-        var hour18 = LocalTime.of(18, 0);
-        var usd15 = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
-        var usd30 = new Money(new BigDecimal("30"), Currency.getInstance("USD"));
+        var nineOClock = LocalTime.of(9, 0);
+        var tenOClock = LocalTime.of(10, 0);
+        var twelveOClock = LocalTime.of(12, 0);
+        var eighteenOClock = LocalTime.of(18, 0);
+        var fifteenUsd = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
+        var thirtyUsd = new Money(new BigDecimal("30"), Currency.getInstance("USD"));
 
         List<SalaryTable.Entry> salaryList = List.of(
-                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, hour9Minute1, hour18, usd15)
+                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, nineOClock, eighteenOClock, fifteenUsd)
         );
         var hourlySalaryTable = new HourlySalaryTable(salaryList);
-        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, hour10, hour12);
+        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, tenOClock, twelveOClock);
 
-        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(usd30));
+        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(thirtyUsd));
     }
 
     @Test
     public void shouldGetSalaryOnlyForHoursInTheRange() {
-        var hour9Minute1 = LocalTime.of(9, 1);
-        var hour17 = LocalTime.of(17, 0);
-        var hour18 = LocalTime.of(18, 0);
-        var hour19 = LocalTime.of(19, 0);
-        var usd15 = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
+        var nineOClock = LocalTime.of(9, 0);
+        var seventeenOClock = LocalTime.of(17, 0);
+        var eighteenOClock = LocalTime.of(18, 0);
+        var nineteenOClock = LocalTime.of(19, 0);
+        var fifteenUsd = new Money(new BigDecimal("15"), Currency.getInstance("USD"));
 
         List<SalaryTable.Entry> salaryList = List.of(
-                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, hour9Minute1, hour18, usd15)
+                new HourlySalaryTable.Entry(DayOfWeek.MONDAY, nineOClock, eighteenOClock, fifteenUsd)
         );
         var hourlySalaryTable = new HourlySalaryTable(salaryList);
-        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, hour17, hour19);
+        var hourlyWorkTime = new HourlyWorkTime(DayOfWeek.MONDAY, seventeenOClock, nineteenOClock);
 
-        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(usd15));
+        assertThat(hourlySalaryTable.workTimeSalary(hourlyWorkTime), is(fifteenUsd));
     }
 }

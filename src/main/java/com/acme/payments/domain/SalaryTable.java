@@ -6,6 +6,8 @@ public interface SalaryTable {
 
     interface Entry {
 
+        boolean equalDayOfWeek(WorkTime workTime);
+
         MonetaryAmount partialWorkTimeSalary(WorkTime workTime);
     }
 }

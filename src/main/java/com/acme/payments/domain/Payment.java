@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface Payment {
 
-    MonetaryAmount totalSalary(List<WorkTime> workTimeList);
+    MonetaryAmount totalSalary(List<WorkTime> workTimes);
 }
