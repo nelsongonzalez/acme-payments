@@ -29,7 +29,7 @@ to allow using other view and show the salary.
 
 Package `com.acme.payments.domain` contains contracts and implementations of the business (calculate salary).
 
-Finally, `com.acme.payments.application` deals with the comunication between `view` and `domain`
+Finally, `com.acme.payments.application` deals with the communication between `view` and `domain`
 packages.
 
 For example, `view` receives a *file path* with schedules of employees, `application`
@@ -46,5 +46,5 @@ that calculate de *salary* of the *employee*.
 
 ## TODO
 
-- [ ] Put domain sourcode in another module to allow better dependency management.
-- [ ] Test with more shcedules.
+- [ ] Put domain sourcecode in another module to allow better dependency management.
+- [ ] Test with more schedules.
