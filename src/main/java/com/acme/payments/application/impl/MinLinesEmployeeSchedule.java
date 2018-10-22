@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-public class MinLinesEmployeeSchedule implements EmployeeSchedule {
+public final class MinLinesEmployeeSchedule implements EmployeeSchedule {
 
     private final DataFileEmployeeSchedule employeeSchedule;
 

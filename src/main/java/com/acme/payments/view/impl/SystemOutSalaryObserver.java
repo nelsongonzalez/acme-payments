@@ -4,7 +4,7 @@ import com.acme.payments.view.SalaryObserver;
 
 import java.beans.PropertyChangeEvent;
 
-public final class OutputStreamSalaryObserver implements SalaryObserver {
+public final class SystemOutSalaryObserver implements SalaryObserver {
 
     private static final String WHITE_BOLD = "\033[1;37m";
 

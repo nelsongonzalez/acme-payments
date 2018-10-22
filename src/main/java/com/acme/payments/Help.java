@@ -1,6 +1,6 @@
 package com.acme.payments;
 
-public class Help {
+public final class Help {
 
     private static final String WHITE_BOLD = "\033[1;37m";
 

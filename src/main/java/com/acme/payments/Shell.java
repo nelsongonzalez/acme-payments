@@ -1,7 +1,7 @@
 package com.acme.payments;
 
 import com.acme.payments.view.impl.HourlySalaryModelObservable;
-import com.acme.payments.view.impl.OutputStreamSalaryObserver;
+import com.acme.payments.view.impl.SystemOutSalaryObserver;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +22,7 @@ public final class Shell {
             Path path = Path.of(commandLineArguments[0]);
             if (Files.exists(path)) {
                 var observableSalary = new HourlySalaryModelObservable(path);
-                var salaryObserver = new OutputStreamSalaryObserver();
+                var salaryObserver = new SystemOutSalaryObserver();
                 observableSalary.addPropertyChangeListener(salaryObserver);
                 observableSalary.calculate();
                 observableSalary.removePropertyChangeListener(salaryObserver);
