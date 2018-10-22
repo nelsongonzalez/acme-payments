@@ -38,11 +38,11 @@ that calculate de *salary* of the *employee*.
 
 **Class diagram**
 
-![UML Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://github.com/nelsongonzalez/acme-payments/classes.puml&fmt=svg)
+![UML Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/nelsongonzalez/acme-payments/master/classes.puml&fmt=svg)
 
 **Components diagram**
 
-![UML Components Diagram](http://www.plantuml.com/plantuml/proxy?src=https://github.com/nelsongonzalez/acme-payments/components.puml&fmt=svg)
+![UML Components Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/nelsongonzalez/acme-payments/master/components.puml&fmt=svg)
 
 ## TODO
 
